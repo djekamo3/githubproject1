@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d119c51e-6b31-4580-b653-1d153d85a1ef" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="github-homework-projectFlow" doc:id="08e5d407-2894-46ad-b4fc-2457bdb7fca7" >
+		<http:listener doc:name="Listener" doc:id="4ac28327-6aab-4f15-9548-b94c2aa0efcc" config-ref="HTTP_Listener_config" path="/githubpractice"/>
+		<logger level="INFO" doc:name="Logger" doc:id="3e9fc1b6-9390-4f34-b4bc-47b3b5f2765f" message='"Hello"'/>
+		<set-payload value='#[{"Hello":"Everything is going to fine"}]' doc:name="Set Payload" doc:id="4fbbaf81-5697-4f92-9698-9a862db42ac3" />
+		<ee:transform doc:name="Transform Message" doc:id="0b4609ad-0637-4880-8c7e-a7535154d742" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
